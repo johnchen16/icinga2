@@ -1,0 +1,17 @@
+--- /root/pnp4nagios/share/pnp/application/models/data.php	2017-08-21 15:52:37.000000000 +0000
++++ /usr/local/pnp4nagios/share/application/models/data.php	2020-06-13 22:49:37.342922000 +0000
+@@ -973,10 +973,13 @@
+ 
+     /*
+     *
++    * Patch: Broken Web UI
++    * Message: sizeof(): Parameter must be an array or an object that implements Countable
++    * Reference: https://github.com/lingej/pnp4nagios/issues/148
+     */
+     public function getFirstPage(){
+         $pages = $this->getPages();
+-        if(sizeof($pages) > 0 ){
++	if(is_array($pages) && sizeof($pages) > 0 ){
+             return urldecode($pages[0]);
+         }else{
+             return FALSE;
